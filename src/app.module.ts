@@ -7,6 +7,7 @@ import { AppService } from './app.service';
 
 @Module({
   imports: [
+    // Läser in .env filen och hämtar URL för MongoDB
     ConfigModule.forRoot({ isGlobal: true }), // läser .env
     MongooseModule.forRootAsync({
       imports: [ConfigModule],

@@ -7,7 +7,7 @@ import { Track, TrackSchema } from './schemas/track.schema';
 @Module({
   // Registrerar Track-schemat i Mongoose
   imports: [
-    MongooseModule.forFeature([{ name: Track.name, schema: TrackSchema }])
+    MongooseModule.forFeature([{ name: Track.name, schema: TrackSchema }]),
   ],
   controllers: [TracksController],
   providers: [TracksService],

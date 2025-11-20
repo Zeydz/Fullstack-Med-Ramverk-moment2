@@ -44,11 +44,9 @@ export class TracksService {
 
   // Uppdaterar en track baserat på ID
   async update(id: string, updateTrackDto: UpdateTrackDto): Promise<Track> {
-    const updatedTrack = await this.trackModel.findByIdAndUpdate(
-      id,
-      updateTrackDto,
-      { new: true },
-    ).exec();
+    const updatedTrack = await this.trackModel
+      .findByIdAndUpdate(id, updateTrackDto, { new: true })
+      .exec();
     // Kastar ett fel om track inte hittas
     if (!updatedTrack) {
       throw new NotFoundException(`Track med ID ${id} hittades inte`);

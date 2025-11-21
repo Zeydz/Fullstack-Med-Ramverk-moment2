@@ -33,22 +33,20 @@ export class TracksService {
   }
 
   // Tar bort en track baserat på ID
-  async remove(id: string): Promise<Track> {
+  async remove(id: string): Promise<{ message: string }> {
     const track = await this.trackModel.findByIdAndDelete(id).exec();
     // Kastar ett fel om track inte hittas
     if (!track) {
       throw new NotFoundException(`Track med ID ${id} hittades inte`);
     }
-    return track;
+    return { message: `Track med ID ${id} har tagits bort`};
   }
 
   // Uppdaterar en track baserat på ID
   async update(id: string, updateTrackDto: UpdateTrackDto): Promise<Track> {
-    const updatedTrack = await this.trackModel.findByIdAndUpdate(
-      id,
-      updateTrackDto,
-      { new: true },
-    ).exec();
+    const updatedTrack = await this.trackModel
+      .findByIdAndUpdate(id, updateTrackDto, { new: true })
+      .exec();
     // Kastar ett fel om track inte hittas
     if (!updatedTrack) {
       throw new NotFoundException(`Track med ID ${id} hittades inte`);

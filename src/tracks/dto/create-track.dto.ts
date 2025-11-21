@@ -4,6 +4,7 @@ import {
   IsNumber,
   IsOptional,
   IsString,
+  Max,
   Min,
 } from 'class-validator';
 import { Type } from 'class-transformer';
@@ -26,6 +27,7 @@ export class CreateTrackDto {
   @IsNumber({}, { message: "'yearReleased' måste vara ett nummer." })
   @IsNotEmpty({ message: "'yearReleased' får inte vara tom." })
   @Min(1000, { message: "'yearReleased' verkar inte vara ett riktigt år." })
+  @Max(new Date().getFullYear(), { message: "'yearReleased' kan inte vara i framtiden."})
   yearReleased: number;
 
   @IsOptional()

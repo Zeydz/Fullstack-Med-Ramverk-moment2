@@ -1,98 +1,116 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Tracks API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+En REST-webbtjänst byggd med **Nest.js** och **MongoDB** för att hantera en musiksamling.  
+Stöder full CRUD-funktionalitet (Create, Read, Update, Delete).
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+---
 
-## Description
+## Installation och körning lokalt
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Project setup
+### 1. Klona repot
 
 ```bash
-$ npm install
+git clone https://github.com/Zeydz/Fullstack_Med_Ramverk-moment2.git
 ```
 
-## Compile and run the project
+### 2. Installera nödvändiga paket
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+npm install
 ```
 
-## Run tests
+### 3. Skapa `.env`-fil i root för Databas-URL.
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+touch .env
 ```
+Fyll i med databas (**MongoDB**) & port information:
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+```env
+MONGO_URL=mongodb+srv://<username>:<password>@<cluster-url>/musicdb?retryWrites=true&w=majority
+PORT=3000
+```
+### 3. Starta servern i utvecklingsläge
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+npm run start:dev
+```
+Servern körs nu via **localhost** med vald PORT i `.env`:
+```
+http://localhost:PORT
+```
+---
+
+## API-endpoints
+
+| Metod | Endpoint       | Beskrivning                  | Body (JSON) |
+|-------|----------------|------------------------------|-------------|
+| GET   | `/tracks`      | Hämta alla tracks            | –           |
+| GET   | `/tracks/:id`  | Hämta en specifik track      | –           |
+| POST  | `/tracks`      | Skapa en ny track            | `{ "title": "...", "artist": "...", "yearReleased": 2000, "addedToPlaylist": false, "genre": "..." }` |
+| PATCH | `/tracks/:id`  | Uppdatera track              | `{ "title": "...", "artist": "...", "yearReleased": 2000, "addedToPlaylist": false, "genre": "..." }` |
+| DELETE| `/tracks/:id`  | Ta bort track                | –           |
+
+---
+
+### Exempel på API-anrop i Thunder Client
+
+#### 1. Skapa en ny track (POST)
+- **URL:** `http://localhost:3000/tracks`
+- **Method:** POST
+- **Headers:**  
+  `Content-Type: application/json`
+- **Body (JSON):**
+```json
+{
+  "title": "Bohemian Rhapsody",
+  "artist": "Queen",
+  "yearReleased": 1975,
+  "addedToPlaylist": false,
+  "genre": "Rock"
+}
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+#### 2. Hämta alla tracks (GET)
+- **URL:** `http://localhost:3000/tracks`
+- **Method:** GET
+- **Headers:** inga
+- **Body (JSON):** ingen
 
-## Resources
+#### 3. Hämta en track med ID (GET)
+- **URL:** `http://localhost:3000/tracks/id`
+- **Method:** GET
+- **Headers:** inga
+- **Body (JSON):** ingen
 
-Check out a few resources that may come in handy when working with NestJS:
+#### 4. Uppdatera en track (PATCH)
+- **URL:** `http://localhost:3000/tracks/id`
+- **Method:** GET
+- **Headers:**  
+  `Content-Type: application/json`
+- **Body (JSON):**
+```json
+{
+  "addedToPlaylist": true,
+  "genre": "Jazz"
+}
+```
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+#### 5. Ta bort en track (DELETE)
+- **URL:** `http://localhost:3000/tracks/id`
+- **Method:** DELETE
+- **Headers:** inga
+- **Body (JSON):** ingen
 
-## Support
+---
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### Validering
+* **title:** får ej vara tom eller endast mellanslag
+* **artist:** får ej vara tom eller endast mellanslag
+* **yearReleased:** måste vara ett nummer, minimum 1000
+* **addedToPlaylist:** boolean (valfritt)
+* **genre:** valfri text (valfritt)
 
-## Stay in touch
+---
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+Skapad av **Joakim Möller (jomo2306)**

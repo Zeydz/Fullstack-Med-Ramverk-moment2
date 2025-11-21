@@ -10,7 +10,7 @@ Stöder full CRUD-funktionalitet (Create, Read, Update, Delete).
 ### 1. Klona repot
 
 ```bash
-git clone https://github.com/Zeydz/Fullstack_Med_Ramverk-moment2.git
+git clone https://github.com/Zeydz/Fullstack-Med-Ramverk-moment2.git
 ```
 
 ### 2. Installera nödvändiga paket

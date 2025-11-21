@@ -13,7 +13,7 @@ import { AppService } from './app.service';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
-        uri: configService.get<string>('MONGO_URL'), // hämtar URL från .env
+        uri: configService.get<string>('MONGO_URL'), // hämtar URL från .env (DATABAS URL, SKAPA EGEN ENV FIL OCH ERSÄTT MED DIN EGEN URL)
       }),
     }),
     TracksModule,
